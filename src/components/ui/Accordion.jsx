@@ -19,7 +19,7 @@ export default function Accordion({ className, children }) {
 
   return (
     <AccordionContext.Provider value={value}>
-      <ul className={`bg-pink-400 p-2 ${className}`}>{children}</ul>
+      <ul className={` p-2 ${className}`}>{children}</ul>
     </AccordionContext.Provider>
   );
 }
@@ -38,11 +38,12 @@ function AccordionBox({ id, className, children }) {
     <AccordionBoxContext.Provider value={id}>
       <li
         className={`${className}${
-          isOpen ? "h-[100px]" : "h-[40px]"
-        } transition-all duration-150 ease-linear`}
+          isOpen ? "h-[140px]" : "h-[40px]"
+        } transition-all duration-500 ease-linear`}
       >
         {children}
       </li>
+      {/* <li className={`${className} h-[40px]`}>{children}</li> */}
     </AccordionBoxContext.Provider>
   );
 }
@@ -53,7 +54,7 @@ function AccordionHeader({ expandIcon, collapseIcon, children }) {
 
   return (
     <div
-      className="flex justify-between items-center"
+      className="flex justify-between items-center bg-pink-400 p-2 rounded h-[40px]"
       onClick={() => toggle(boxId)}
     >
       {children}
@@ -70,8 +71,8 @@ function AccordionContent({ className, children }) {
 
   return cloneElement(children, {
     className: `${className} ${
-      isOpen ? "scale-y-1 origin-top" : "scale-y-0 origin-top"
-    } transition-all duration-150`,
+      isOpen ? "scale-y-1 origin-top w-[250%]" : "scale-y-0 origin-top w-[250%]"
+    } transition-all duration-500`,
   });
 }
 

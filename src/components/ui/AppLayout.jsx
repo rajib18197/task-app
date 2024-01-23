@@ -14,6 +14,7 @@ import Modal from "./Modal";
 import CreateEditForm from "../../features/tasks/CreateEditForm";
 import ConfirmBox from "./ConfirmBox";
 import DeleteAllTasks from "../../features/tasks/DeleteAllTasks";
+import { toast } from "react-toastify";
 
 export default function AppLayout() {
   const [tasksList, setTasksList] = useState(TASKS_LIST);
@@ -56,10 +57,12 @@ export default function AppLayout() {
 
   function handleDeleteTask(id) {
     setTasksList((tasks) => tasks.filter((task) => task.id !== id));
+    toast.success("Task successfully deleted");
   }
 
   function handleDeleteAllTask(id) {
     setTasksList([]);
+    toast.success("All Task successfully deleted");
   }
 
   return (
@@ -87,7 +90,12 @@ export default function AppLayout() {
                   onSearchTermChange={setSearchTerm}
                 />
 
-                <AddTask onOpenModal={() => setIsOpenModal((open) => !open)} />
+                <AddTask
+                  onOpenModal={() => {
+                    setIsOpenModal((open) => !open);
+                    setTaskToEdit(null);
+                  }}
+                />
 
                 <DeleteAllTasks onDeleteAllTasks={handleDeleteAllTask} />
               </TaskTableOperations>

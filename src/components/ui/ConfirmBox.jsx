@@ -1,30 +1,42 @@
+import Button from "./Button";
+import Heading from "./Heading";
+
 export default function ConfirmBox({ onDeleteTask, onCloseModal }) {
   return (
-    <div className="fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] p-2 bg-stone-800 text-stone-50">
+    <div className="fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] p-4 bg-stone-900 text-stone-50 w-[500px] rounded">
       <button
         className="absolute top-2 right-2 border-none outline-none text-xl"
         onClick={onCloseModal}
       >
         &times;
       </button>
-      <div className="flex flex-col gap-2">
-        <h2 className="uppercase">Delete Task</h2>
-        <p>
-          Are you sure you want to delete this cabins permanently? This action
+      <div className="flex flex-col gap-[12px]">
+        <Heading as={"h2"} className="uppercase">
+          Delete Task
+        </Heading>
+        <p className="leading-6 text-[18px]">
+          Are you sure you want to delete this task permanently? This action
           cannot be undone.
         </p>
 
-        <div className="items-end">
-          <button onClick={onCloseModal}>Cancel</button>
-          <button
-            onClick={() => {
+        <div className="flex gap-4 items-center self-end">
+          <Button
+            onSmash={onCloseModal}
+            bgColor={"bg-stone-100"}
+            color={"text-stone-800"}
+          >
+            Cancel
+          </Button>
+          <Button
+            bgColor={"bg-red-600"}
+            onSmash={() => {
               console.log(onDeleteTask);
               onDeleteTask();
               onCloseModal();
             }}
           >
             Delete
-          </button>
+          </Button>
         </div>
       </div>
     </div>
