@@ -17,28 +17,28 @@ const questions = [
 ];
 
 export default function App() {
-  // return <AppLayout />;
+  return <AppLayout />;
   // return <Box />;
-  return (
-    <Accordion className="flex flex-col gap-2">
-      {questions.map((question, i) => (
-        <Accordion.Box
-          id={i}
-          className="bg-pink-600 p-2 rounded "
-          key={question.title}
-        >
-          <Accordion.Header
-            expandIcon={<span>Expand</span>}
-            collapseIcon={<span>Collapse</span>}
-          >
-            <h3>{question.title}</h3>
-          </Accordion.Header>
+  // return (
+  //   <Accordion className="flex flex-col gap-2">
+  //     {questions.map((question, i) => (
+  //       <Accordion.Box
+  //         id={i}
+  //         className="bg-pink-600 p-2 rounded "
+  //         key={question.title}
+  //       >
+  //         <Accordion.Header
+  //           expandIcon={<span>Expand</span>}
+  //           collapseIcon={<span>Collapse</span>}
+  //         >
+  //           <h3>{question.title}</h3>
+  //         </Accordion.Header>
 
-          <Accordion.Content className="bg-stone-200 text-stone-900">
-            <article>{question.description}</article>
-          </Accordion.Content>
-        </Accordion.Box>
-      ))}
-    </Accordion>
-  );
+  //         <Accordion.Content className="bg-stone-200 text-stone-900">
+  //           <article>{question.description}</article>
+  //         </Accordion.Content>
+  //       </Accordion.Box>
+  //     ))}
+  //   </Accordion>
+  // );
 }

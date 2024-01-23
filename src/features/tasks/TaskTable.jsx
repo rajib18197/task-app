@@ -1,6 +1,13 @@
 import TaskRow from "./TaskRow";
 
-export default function TaskTable({ tasksList }) {
+export default function TaskTable({ tasksList, onEditTask, onDeleteTask }) {
+  if (tasksList.length === 0)
+    return (
+      <h2>
+        No Tasks in the List! Start adding some tasks to your Bucket list 🚀
+      </h2>
+    );
+
   return (
     <div className="overflow-auto">
       <table className="table-fixed overflow-auto xl:w-full">
@@ -27,7 +34,12 @@ export default function TaskTable({ tasksList }) {
 
         <tbody>
           {tasksList.map((task) => (
-            <TaskRow key={task.id} task={task} />
+            <TaskRow
+              key={task.id}
+              task={task}
+              onEditTask={onEditTask}
+              onDeleteTask={onDeleteTask}
+            />
           ))}
         </tbody>
       </table>

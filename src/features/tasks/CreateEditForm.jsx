@@ -1,32 +1,110 @@
 import { useState } from "react";
 import Select from "../../components/ui/Select";
 
-export default function CreateEditForm({ onCancel, onAddTask }) {
+export default function CreateEditForm({ onCancel, onAddTask, taskToEdit }) {
+  const isEditSession = Boolean(taskToEdit?.id);
+  console.log(isEditSession);
+
   const [values, setValues] = useState({
+    title: taskToEdit?.title || "",
+    description: taskToEdit?.description || "",
+    tags: taskToEdit?.tags || [],
+    priority: taskToEdit?.priority || "",
+  });
+
+  const [errors, setErrors] = useState({
     title: "",
     description: "",
-    tags: [],
+    tags: "",
     priority: "",
   });
 
   function handleChange(e) {
-    if (e.target.name === "tags") {
-      setValues((values) => ({
-        ...values,
-        [e.target.name]: e.target.value.split(",").map((el) => el.trim()),
-      }));
-      return;
-    }
+    setErrors((errors) => ({ ...errors, [e.target.name]: "" }));
+
+    // if (e.target.name === "tags") {
+    //   setValues((values) => ({
+    //     ...values,
+    //     [e.target.name]: e.target.value.split(",").map((el) => el.trim()),
+    //   }));
+    //   return;
+    // }
     setValues((values) => ({ ...values, [e.target.name]: e.target.value }));
+  }
+
+  function handleBlur(e) {
+    console.log(e.target.value);
+    setErrors((errors) => {
+      if (
+        e.target.name === "tags" &&
+        e.target.value
+          .split(",")
+          .map((el) => el.trim())
+          .filter(Boolean).length === 0
+      ) {
+        return {
+          ...errors,
+          [e.target.name]: "each tag must be seperated by comma",
+        };
+      }
+
+      if (
+        e.target.name === "description" &&
+        !(
+          e.target.value.trim().length >= 6 &&
+          e.target.value.trim().length <= 100
+        )
+      ) {
+        return {
+          ...errors,
+          [e.target.name]:
+            "Description must be in between (6 - 100) characters.",
+        };
+      }
+
+      console.log(e.target.name);
+      if (e.target.name !== "tags" && e.target.name !== "description") {
+        return {
+          ...errors,
+          [e.target.name]: `${e.target.name} Cannot be Empty.`,
+        };
+      }
+
+      return {
+        ...errors,
+      };
+    });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     console.log(values);
 
-    onAddTask({ ...values });
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
+    if (Object.keys(values).some((value) => values[value].length === 0)) {
+      Object.keys(values).forEach((value) => {
+        setErrors((errors) => ({
+          ...errors,
+          [value]: "This field is required",
+        }));
+      });
+
+      return;
+    }
+
+    if (isEditSession) {
+      onAddTask({ ...values, id: taskToEdit.id });
+    } else {
+      onAddTask({ id: crypto.randomUUID(), ...values });
+    }
+
     onCancel();
   }
+
+  console.log(errors);
 
   return (
     <form
@@ -46,9 +124,10 @@ export default function CreateEditForm({ onCancel, onAddTask }) {
             name="title"
             value={values.title}
             onChange={handleChange}
+            onBlur={handleBlur}
             id="title"
-            required
           />
+          {errors.title && <p>{errors.title}</p>}
         </div>
         <div class="space-y-2 lg:space-y-3">
           <label for="description">Description</label>
@@ -58,9 +137,10 @@ export default function CreateEditForm({ onCancel, onAddTask }) {
             name="description"
             value={values.description}
             onChange={handleChange}
+            onBlur={handleBlur}
             id="description"
-            required
           ></textarea>
+          {errors.description && <p>{errors.description}</p>}
         </div>
         <div class="grid-cols-2 gap-x-4 max-md:space-y-9 md:grid lg:gap-x-10 xl:gap-x-20">
           <div class="space-y-2 lg:space-y-3">
@@ -69,11 +149,13 @@ export default function CreateEditForm({ onCancel, onAddTask }) {
               class="block w-full rounded-md bg-[#2D323F] px-3 py-2.5"
               type="text"
               name="tags"
+              placeholder="Enter tags with comma separated"
               value={values.tags}
               onChange={handleChange}
+              onBlur={handleBlur}
               id="tags"
-              required
             />
+            {errors.tags && <p>{errors.tags}</p>}
           </div>
           <div class="space-y-2 lg:space-y-3">
             <label for="priority">Priority</label>
@@ -108,3 +190,12 @@ export default function CreateEditForm({ onCancel, onAddTask }) {
     </form>
   );
 }
+
+// console.log(
+//   e.target.value
+//     .split(",")
+//     .map((el) => el.trim())
+//     .filter(Boolean).length === 0 ||
+//     (e.target.value.split(",").length === 1 &&
+//       e.target.value.split(",").join("").includes(" "))
+// );

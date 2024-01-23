@@ -12,16 +12,47 @@ import AddTask from "../../features/tasks/AddTask";
 import SearchBar from "./SearchBar";
 import Modal from "./Modal";
 import CreateEditForm from "../../features/tasks/CreateEditForm";
+import ConfirmBox from "./ConfirmBox";
+import DeleteAllTasks from "../../features/tasks/DeleteAllTasks";
 
 export default function AppLayout() {
   const [tasksList, setTasksList] = useState(TASKS_LIST);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [taskToEdit, setTaskToEdit] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  let filteredTasksList = tasksList;
+  if (searchTerm.length > 0)
+    filteredTasksList = filteredTasksList.filter((task) =>
+      task.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+  console.log(filteredTasksList);
 
   function handleAddTask(newTask) {
-    setTasksList((tasks) => [...tasks, newTask]);
+    setTasksList((tasks) => {
+      const nextTasksList = [...tasks];
+
+      const editedTaskIndex = nextTasksList.findIndex(
+        (task) => task.id === newTask.id
+      );
+
+      console.log(editedTaskIndex);
+
+      if (editedTaskIndex !== -1) {
+        nextTasksList[editedTaskIndex] = newTask;
+        return nextTasksList;
+      }
+
+      return [...tasks, newTask];
+    });
   }
 
-  function handleEditTask(task) {}
+  function handleEditTask(task) {
+    console.log(task);
+    setTaskToEdit(task);
+    setIsOpenModal(true);
+  }
 
   function handleDeleteTask(id) {
     setTasksList((tasks) => tasks.filter((task) => task.id !== id));
@@ -37,6 +68,7 @@ export default function AppLayout() {
         <Modal>
           <CreateEditForm
             onAddTask={handleAddTask}
+            taskToEdit={taskToEdit}
             onCancel={() => setIsOpenModal(false)}
           />
         </Modal>
@@ -48,13 +80,24 @@ export default function AppLayout() {
           <TaskBox>
             <TaskController>
               <Heading as={"h2"}>Your Tasks</Heading>
+
               <TaskTableOperations>
-                <SearchBar />
+                <SearchBar
+                  searchTerm={searchTerm}
+                  onSearchTermChange={setSearchTerm}
+                />
+
                 <AddTask onOpenModal={() => setIsOpenModal((open) => !open)} />
+
+                <DeleteAllTasks onDeleteAllTasks={handleDeleteAllTask} />
               </TaskTableOperations>
             </TaskController>
 
-            <TaskTable tasksList={tasksList} />
+            <TaskTable
+              tasksList={filteredTasksList}
+              onEditTask={handleEditTask}
+              onDeleteTask={handleDeleteTask}
+            />
           </TaskBox>
 
           <Footer />
