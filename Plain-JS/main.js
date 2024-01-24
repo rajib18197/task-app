@@ -23,14 +23,6 @@ class Timer {
     this.disabledElement(this.elements.startBtn);
   }
 
-  disabledElement(element) {
-    element.disabled = true;
-  }
-
-  unDisabledElement(element) {
-    element.disabled = false;
-  }
-
   defineActions() {
     this.elements.resetBtn.addEventListener("click", () =>
       this.show(this.elements.timerBox, "close")
@@ -54,10 +46,6 @@ class Timer {
     const secondsLeft = this._totalSeconds % 60;
     this.elements.minutes.textContent = `${minutesLeft}`.padStart(2, 0);
     this.elements.seconds.textContent = `${secondsLeft}`.padStart(2, 0);
-  }
-
-  clearInput() {
-    this.elements.resetInput.value = "";
   }
 
   resetTimerValue(e) {
@@ -90,6 +78,18 @@ class Timer {
     el.classList.remove(className);
   }
 
+  disabledElement(element) {
+    element.disabled = true;
+  }
+
+  unDisabledElement(element) {
+    element.disabled = false;
+  }
+
+  clearInput() {
+    this.elements.resetInput.value = "";
+  }
+
   timerCountdown() {
     if (this._totalSeconds < 0) {
       this.stopTimer();
@@ -113,16 +113,22 @@ class Timer {
 				<button class="timer__btn timer__btn--pause close">Pause</button>
 				<button class="timer__btn timer__btn--start">Start</button>
 				<button class='timer__btn timer__btn--reset'>Reset</button>
-				<div class="timer__input-box close"><input type="text" class="timer__input timer__input--reset"></div>
+				
+				<div class="timer__input-box close">
+					<input type="text" class="timer__input timer__input--reset">
+				</div>
 		`;
   }
 }
 
 const parentElement1 = document.querySelector("#timer-1");
 const parentElement2 = document.querySelector("#timer-2");
+const parentElement3 = document.querySelector("#timer-3");
 
 const timer1 = new Timer();
 const timer2 = new Timer();
+const timer3 = new Timer();
 
 timer1.render({ root: parentElement1 }); // render timer1 in the root element
 timer2.render({ root: parentElement2 }); // render timer2 in the root element
+timer3.render({ root: parentElement3 }); // render timer3 in the root element
