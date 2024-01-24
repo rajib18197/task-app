@@ -16,6 +16,12 @@ export default function Heading({ as, children }) {
         <Type className="text-2xl font-semibold max-sm:mb-4">{children}</Type>
       );
 
+    case "h3":
+      Type = as;
+      return (
+        <Type className="text-xl font-semibold max-sm:mb-4">{children}</Type>
+      );
+
     default:
       return "Unknown Heading Type. Provide a Valid Type!";
   }

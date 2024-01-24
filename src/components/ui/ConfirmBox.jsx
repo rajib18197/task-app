@@ -3,18 +3,16 @@ import Heading from "./Heading";
 
 export default function ConfirmBox({ onDeleteTask, onCloseModal }) {
   return (
-    <div className="fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] p-4 bg-stone-900 text-stone-50 w-[500px] rounded">
+    <div className="fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] p-6 bg-stone-900 text-stone-50 w-[500px] rounded">
       <button
-        className="absolute top-2 right-2 border-none outline-none text-xl"
+        className="absolute top-2 right-2 border-none outline-none text-2xl"
         onClick={onCloseModal}
       >
         &times;
       </button>
-      <div className="flex flex-col gap-[12px]">
-        <Heading as={"h2"} className="uppercase">
-          Delete Task
-        </Heading>
-        <p className="leading-6 text-[18px]">
+      <div className="flex flex-col gap-[14px]">
+        <Heading as={"h3"}>Delete Task</Heading>
+        <p className="leading-6 text-[18px] text-stone-400">
           Are you sure you want to delete this task permanently? This action
           cannot be undone.
         </p>
