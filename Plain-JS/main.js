@@ -1,23 +1,22 @@
 "use Strict";
 
-const parentElement = document.querySelector(".timer1");
-const parentElement2 = document.querySelector(".timer2");
-
 class Timer {
   _totalSeconds;
 
-  render(root, className) {
+  render({ root }) {
     const markup = this._generateMarkup();
     root.insertAdjacentHTML("beforeend", markup);
 
+    const rootId = root.getAttribute("id");
+
     this.elements = {
-      resetBtn: document.querySelector(`.${className} .timer__btn--reset`),
-      startBtn: document.querySelector(`.${className} .timer__btn--start`),
-      pauseBtn: document.querySelector(`.${className} .timer__btn--pause`),
-      minutes: document.querySelector(`.${className} .timer__text--minutes`),
-      seconds: document.querySelector(`.${className} .timer__text--seconds`),
-      timerBox: document.querySelector(`.${className} .timer__input-box`),
-      resetInput: document.querySelector(`.${className} .timer__input--reset`),
+      resetBtn: document.querySelector(`#${rootId} .timer__btn--reset`),
+      startBtn: document.querySelector(`#${rootId} .timer__btn--start`),
+      pauseBtn: document.querySelector(`#${rootId} .timer__btn--pause`),
+      minutes: document.querySelector(`#${rootId} .timer__text--minutes`),
+      seconds: document.querySelector(`#${rootId} .timer__text--seconds`),
+      timerBox: document.querySelector(`#${rootId} .timer__input-box`),
+      resetInput: document.querySelector(`#${rootId} .timer__input--reset`),
     };
 
     this.defineActions();
@@ -119,8 +118,11 @@ class Timer {
   }
 }
 
-const timer1 = new Timer();
-timer1.render(parentElement, "timer1");
+const parentElement1 = document.querySelector("#timer-1");
+const parentElement2 = document.querySelector("#timer-2");
 
+const timer1 = new Timer();
 const timer2 = new Timer();
-timer2.render(parentElement2, "timer2");
+
+timer1.render({ root: parentElement1 }); // render timer1 in the root element
+timer2.render({ root: parentElement2 }); // render timer2 in the root element
