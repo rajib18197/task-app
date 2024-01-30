@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Accordion from "./components/ui/Accordion";
 import AppLayout from "./components/ui/AppLayout";
 import Box from "./components/ui/LinkedBox";
+import SelectableSearch from "./components/ui/selectableSearch/SelectableSearch";
 
 const questions = [
   {
@@ -46,8 +47,9 @@ const questions = [
 export default function App() {
   return (
     <>
-      <AppLayout />;
-      <ToastContainer position="top-center" />
+      {/* <AppLayout />;
+      <ToastContainer position="top-center" /> */}
+      <SelectableSearch />
     </>
   );
   // return <Box />;
