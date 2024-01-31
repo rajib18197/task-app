@@ -5,6 +5,7 @@ import Accordion from "./components/ui/Accordion";
 import AppLayout from "./components/ui/AppLayout";
 import Box from "./components/ui/LinkedBox";
 import SelectableSearch from "./components/ui/selectableSearch/SelectableSearch";
+import Layout from "./components/ui/tic-tac-toe/Layout";
 
 const questions = [
   {
@@ -49,7 +50,8 @@ export default function App() {
     <>
       {/* <AppLayout />;
       <ToastContainer position="top-center" /> */}
-      <SelectableSearch />
+      {/* <SelectableSearch /> */}
+      <Layout />
     </>
   );
   // return <Box />;
