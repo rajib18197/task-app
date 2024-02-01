@@ -179,3 +179,144 @@
 // const absent = absentNumber(arr, 6);
 
 // console.log(absent);
+
+/* Doubly Linked List */
+
+class Node {
+  data;
+  prev;
+  next;
+
+  constructor(data) {
+    this.data = data;
+    this.prev = null;
+    this.next = null;
+  }
+}
+
+class DoublyLinkedList {
+  head = null;
+  _size = 0;
+
+  insertAtFirst(data) {
+    const newNode = new Node(data);
+
+    if (this.head === null) {
+      this.head = newNode;
+      this._size++;
+      return;
+    }
+
+    this.head.prev = newNode;
+    newNode.next = this.head;
+    this.head = newNode;
+    this._size++;
+  }
+
+  insertAtLast(data) {
+    const newNode = new Node(data);
+
+    if (this.head === null) {
+      this.insertAtFirst(data);
+      return;
+    }
+
+    let temp = this.head;
+
+    while (temp.next) {
+      temp = temp.next;
+    }
+
+    temp.next = newNode;
+    newNode.prev = temp;
+  }
+
+  display() {
+    let temp = this.head;
+    let result = "";
+
+    while (temp) {
+      result = result + temp.data + " -> ";
+      temp = temp.next;
+    }
+
+    result += "end";
+    console.log(result);
+  }
+
+  transformArrToDll(arr) {
+    let head = null;
+    let temp = null;
+
+    for (let el of arr) {
+      const newNode = new Node(el);
+
+      if (head === null) {
+        head = newNode;
+        temp = head;
+        continue;
+      }
+
+      temp.next = newNode;
+      newNode.prev = temp;
+      temp = temp.next;
+    }
+
+    temp = head;
+    let result = "";
+
+    while (temp) {
+      result = result + temp.data + " -> ";
+      temp = temp.next;
+    }
+
+    result = result + "end";
+
+    console.log(result);
+  }
+
+  transformArrToDllRec(arr) {
+    const newNode = new Node(arr[0]);
+
+    if (arr.length === 1) {
+      return newNode;
+    }
+
+    const node = this.transformArrToDllRec(arr.slice(1));
+    node.prev = newNode;
+    newNode.next = node;
+    return newNode;
+  }
+
+  transformArrToDllRec2(arr, back) {
+    if (arr.length === 0) {
+      return null;
+    }
+
+    const newNode = new Node(arr[0]);
+    newNode.prev = back;
+    newNode.next = this.transformArrToDllRec2(arr.slice(1), newNode);
+    return newNode;
+  }
+
+  transformArrToDllReverse(arr, up) {
+    if (arr.length === 0) {
+      return null;
+    }
+
+    const newNode = new Node(arr[0]);
+    newNode.next = up;
+    newNode.prev = this.transformArrToDllReverse(arr.slice(1), newNode);
+    return newNode;
+  }
+}
+
+const dll = new DoublyLinkedList();
+// dll.insertAtFirst(4);
+// dll.insertAtFirst(8);
+// dll.insertAtLast(12);
+// dll.insertAtLast(16);
+// console.log(dll.transformArrToDllRec([1, 2, 3, 4]));
+// console.log(dll.transformArrToDllRec2([1, 2, 3, 4], null));
+console.log(dll.transformArrToDllReverse([1, 2], null));
+// dll.display();
