@@ -321,60 +321,6 @@ const dll = new DoublyLinkedList();
 console.log(dll.transformArrToDllReverse([1, 2], null));
 // dll.display();
 
-var MyQueue = function () {
-  this.stack1 = [];
-  this.stack2 = [];
-};
-
-/**
- * @param {number} x
- * @return {void}
- */
-MyQueue.prototype.push = function (x) {
-  this.stack1[this.stack1.length] = x;
-};
-
-/**
- * @return {number}
- */
-MyQueue.prototype.pop = function () {
-  for (let i = this.stack1.length - 1; i >= 1; i--) {
-    this.stack2[this.stack2.length] = this.stack1[i];
-  }
-  const poppedElement = this.stack1[0];
-
-  for (let i = 0; i < this.stack2.length; i++) {
-    this.stack1[i] = this.stack2[this.stack2.length - i - 1];
-  }
-  this.stack1.length--;
-  this.stack2 = [];
-  console.log(poppedElement, this.stack2, this.stack1.length);
-  return poppedElement;
-};
-
-/**
- * @return {number}
- */
-MyQueue.prototype.peek = function () {
-  return this.stack1[0];
-};
-
-/**
- * @return {boolean}
- */
-MyQueue.prototype.empty = function () {
-  return this.stack1.length === 0;
-};
-
-/**
- * Your MyQueue object will be instantiated and called as such:
- * var obj = new MyQueue()
- * obj.push(x)
- * var param_2 = obj.pop()
- * var param_3 = obj.peek()
- * var param_4 = obj.empty()
- */
-
 const arr = [3, 5, 2, 1, 4];
 
 const cyclick = function (arr) {

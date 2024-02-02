@@ -6,6 +6,8 @@ import AppLayout from "./components/ui/AppLayout";
 import Box from "./components/ui/LinkedBox";
 import SelectableSearch from "./components/ui/selectableSearch/SelectableSearch";
 import Layout from "./components/ui/tic-tac-toe/Layout";
+import Main from "./components/ui/Rerender";
+import LRUCache from "./components/ui/LRUCache/LRUCache";
 
 const questions = [
   {
@@ -51,7 +53,9 @@ export default function App() {
       {/* <AppLayout />;
       <ToastContainer position="top-center" /> */}
       {/* <SelectableSearch /> */}
-      <Layout />
+      {/* <Layout /> */}
+      {/* <Main /> */}
+      <LRUCache />
     </>
   );
   // return <Box />;
